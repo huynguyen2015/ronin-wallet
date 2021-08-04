@@ -1,0 +1,84 @@
+{
+  "common": {
+    "ok": "OK!",
+    "cancel": "Cancel",
+    "back": "Back"
+  },
+  "errors": {
+    "invalidEmail": "Invalid email address.",
+    "requiredField": "This is required field"
+  },
+  "welcomeScreen": {
+    "poweredBy": "POWERED BY IGNITE",
+    "readyForLaunch": "Ready for launch.",
+    "continue": "CONTINUE",
+    "login": "Login",
+    "home": "Home",
+    "sendAssets": "Listing",
+    "detail": "Detail"
+  },
+  "sendAssetsScreen": {
+    "title": "Send Assets",
+    "from": "From",
+    "to": "To",
+    "asset": "Asset",
+    "assets": "Assets",
+    "amount": "Amount",
+    "btnCancel": "Cancel",
+    "btnSend": "Send",
+    "myWallet": "My Wallet",
+    "availableAmount": "Available: {{amount}}",
+    "max": "MAX",
+    "saveSuccessfully": "Successfully Sent",
+    "saveSuccessfullyMessage": "Your {{sign}} has been sent!",
+    "saveSuccessfullyThankMessage": "Thank you for using our service",
+    "btnOK": "OK"
+  },
+  "demoScreen": {
+    "howTo": "Test",
+    "title": "What’s In This Stack?",
+    "tagLine": "Congratulations, you’ve got a very advanced React Native app template here.  Take advantage of this boilerplate!",
+    "reactotron": "Demo Reactotron",
+    "androidReactotronHint": "If this doesn't work, ensure the Reactotron desktop app is running, run adb reverse tcp:9090 tcp:9090 from your terminal, and reload the app.",
+    "iosReactotronHint": "If this doesn't work, ensure the Reactotron desktop app is running and reload app."
+  },
+  "loginScreen": {
+    "howTo": "HOW TO",
+    "title": "Ronin Wallet",
+    "tagLine": "Your Digital Passport",
+    "username": "Username",
+    "password": "Enter password",
+    "btnLogin": "Unlock",
+    "btnLoginHint": ""
+  },
+  "homeScreen": {
+    "howTo": "HOW TO",
+    "roninWallet": "Ronin Wallet",
+    "myWallet": "My Wallet",
+    "assets": "Assets",
+    "tagLine": "Tag line",
+    "reactotron": "Demo Reactotron",
+    "androidReactotronHint": "If this doesn't work, ensure the Reactotron desktop app is running, run adb reverse tcp:9090 tcp:9090 from your terminal, and reload the app.",
+    "iosReactotronHint": "If this doesn't work, ensure the Reactotron desktop app is running and reload app."
+  },
+  "listingScreen": {
+    "howTo": "HOW TO",
+    "title": "What’s In This Stack?",
+    "tagLine": "Congratulations, you’ve got a very advanced React Native app template here.  Take advantage of this boilerplate!",
+    "reactotron": "Demo Reactotron",
+    "androidReactotronHint": "If this doesn't work, ensure the Reactotron desktop app is running, run adb reverse tcp:9090 tcp:9090 from your terminal, and reload the app.",
+    "iosReactotronHint": "If this doesn't work, ensure the Reactotron desktop app is running and reload app."
+  },
+  "detailScreen": {
+    "howTo": "HOW TO",
+    "title": "What’s In This Stack?",
+    "tagLine": "Congratulations, you’ve got a very advanced React Native app template here.  Take advantage of this boilerplate!",
+    "reactotron": "Demo Reactotron",
+    "androidReactotronHint": "If this doesn't work, ensure the Reactotron desktop app is running, run adb reverse tcp:9090 tcp:9090 from your terminal, and reload the app.",
+    "iosReactotronHint": "If this doesn't work, ensure the Reactotron desktop app is running and reload app."
+  },
+  "storybook": {
+    "placeholder": "Placeholder",
+    "field": "Field"
+  },
+}
