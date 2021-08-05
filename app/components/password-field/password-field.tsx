@@ -11,7 +11,7 @@ import {
 } from "react-native"
 import { color, spacing, typography } from "../../theme"
 import { translate } from "../../i18n"
-import { Text } from "../text/text"
+import { Text } from ".."
 import { mergeAll, flatten } from "ramda"
 const IC_EYE = require("../../../assets/icons/ic-eye.png")
 

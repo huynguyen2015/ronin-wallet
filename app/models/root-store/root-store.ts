@@ -1,19 +1,18 @@
 import { Instance, SnapshotOut, types } from "mobx-state-tree"
+import {AccountStore} from "./accountStore"
 
 /**
  * A RootStore model.
  */
 // prettier-ignore
 export const RootStoreModel = types.model("RootStore").props({
-  errorMessage: types.optional(types.string, "")
+  accountStore: types.optional(AccountStore, {})
 })
 
 /**
  * The RootStore instance.
  */
-export interface RootStore extends Instance<typeof RootStoreModel> {
-  errorMessage: undefined
-}
+export interface RootStore extends Instance<typeof RootStoreModel> {}
 
 /**
  * The data of a RootStore.

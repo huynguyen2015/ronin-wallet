@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import { TextStyle, View, ViewStyle, SafeAreaView, ScrollView } from "react-native"
 import { useNavigation } from "@react-navigation/native"
 import { observer } from "mobx-react-lite"
@@ -7,11 +7,11 @@ import { color, spacing } from "../../theme"
 import { Screens } from "../../navigation"
 import { Formik } from "formik"
 import { Form, FormInput, FormSelect } from "../../components/forms"
-import userService from "../../services/api/userService"
 import { translate } from "../../i18n"
 import * as Yup from "yup"
 import FormControl from "../../components/forms/formControl"
 import Modal from "react-native-modal"
+import { useStores } from "../../models"
 
 const FULL: ViewStyle = { flex: 1 }
 const CONTAINER: ViewStyle = {
@@ -116,7 +116,7 @@ const BADGE_TEXT: TextStyle = {
   color: '#57627B'
 }
 
-const MODAL_SUCCESS = {
+const MODAL_SUCCESS: ViewStyle = {
   marginHorizontal: 20,
   marginVertical: 40,
   borderRadius: 16,
@@ -174,40 +174,24 @@ const BUTTON_OK: ViewStyle = {
 export const SendAssetsScreen = observer(function SendAssetsScreen() {
   const navigation = useNavigation()
   const goBack = () => navigation.goBack()
+  const {accountStore} = useStores()
+  const {myProfile, allAssets} = accountStore
   const requiredMessage = translate("errors.requiredField")
-  const [sendAssetData, setSendAssetData] = useState({
-    account: '(7300...3334)'} as any)
+  const initialData = { account: myProfile.accountNumberHiding} as any
   const [modalVisible, setModalVisible] = useState(false)
   const [maxAmount, setMaxAmount] = useState(0)
   const [thankMessage, setThankMessage] = useState(translate('sendAssetsScreen.saveSuccessfullyMessage', {sign: ''}))
-  const [assets, setAssets] = useState([
-    {balance: 50, country: 'eu', sign: 'EUR', exchangeRate: 23},
-    {balance: 10000, country: 'ja', sign: 'YEN', exchangeRate: 23}])
   const validationSchema = Yup.object()
   .shape({
-    from: Yup.string().required(requiredMessage),
     to: Yup.string().required(requiredMessage),
     asset: Yup.object().required(requiredMessage),
     amount: Yup.number().max(maxAmount).required(requiredMessage),
   })
 
-  useEffect(() => {
-    setSendAssetData(sendAssetData)
-    userService.getUsers({}).then(res => {
-      setAssets(assets)
-    })
-  }, [])
-
   const handleSave = (values) => {
-    console.log(values)
-    // if (values.asset) {
-      setThankMessage(translate('sendAssetsScreen.saveSuccessfullyMessage', {sign: values?.asset?.sign}))
-      setModalVisible(true)
-    // }
-    setTimeout(() => {
-      /// TODO: call service update or use mobx
-      // navigation.navigate(Screens.home)
-    }, 1000)
+    accountStore.updateAsset(values)
+    setThankMessage(translate('sendAssetsScreen.saveSuccessfullyMessage', {sign: values?.asset?.sign}))
+    setModalVisible(true)
   }
 
   const handleCancel = () => {
@@ -234,7 +218,7 @@ export const SendAssetsScreen = observer(function SendAssetsScreen() {
         />
         <View style={FORM_WRAPPER}>
           <Formik
-            initialValues={sendAssetData}
+            initialValues={initialData}
             enableReinitialize
             validationSchema={validationSchema}
             onSubmit={(values) => {
@@ -242,47 +226,47 @@ export const SendAssetsScreen = observer(function SendAssetsScreen() {
             }}
           >
             {(props) => {
-              let {values} = props
-              let hint = translate('sendAssetsScreen.availableAmount', {amount: values?.asset?.balance || 0})
+              let {values, handleSubmit} = props
+              let hint = translate('sendAssetsScreen.availableAmount', {amount: values?.asset?.amount || 0})
               setThankMessage(translate('sendAssetsScreen.saveSuccessfullyMessage', {sign: values?.asset?.sign || ''}))
               return (
-                <Form>
+                <Form style={{flex: 1}}>
                   <ScrollView>
                     <FormControl label="sendAssetsScreen.from" >
                       <View style={DISABLE_INPUT}>
                         <Text tx="sendAssetsScreen.myWallet" style={DISABLE_INPUT_PLACEHOLDER}/>
-                        <Text text={sendAssetData.account} style={DISABLE_INPUT_ACCOUNT}/>
+                        <Text text={initialData.account} style={DISABLE_INPUT_ACCOUNT}/>
                       </View>
                     </FormControl>
                     <FormInput label="sendAssetsScreen.to" name="to"/>
                     <FormSelect label="sendAssetsScreen.asset" name="asset"
-                                modalTitle="sendAssetsScreen.assets" options={assets}
-                                onChangeFieldValue={(value) => setMaxAmount(value.balance || 0)}
+                                modalTitle="sendAssetsScreen.assets" options={allAssets}
+                                onChangeFieldValue={(value) => setMaxAmount(value.amount || 0)}
                     />
                     <FormInput label="sendAssetsScreen.amount" name="amount" hint={hint}
                                keyboardType="numeric" suffixComponent={maxBadge}/>
                   </ScrollView>
+                  <SafeAreaView style={FOOTER_ACTIONS}>
+                    <View style={BUTTON_WRAPPER}>
+                      <Button
+                        style={BUTTON_CANCEL}
+                        textStyle={BUTTON_CANCEL_TEXT}
+                        tx="sendAssetsScreen.btnCancel"
+                        onPress={handleCancel}
+                      />
+                      <Button
+                        style={BUTTON_SAVE}
+                        textStyle={BUTTON_SAVE_TEXT}
+                        tx="sendAssetsScreen.btnSend"
+                        onPress={handleSubmit}
+                      />
+                    </View>
+                  </SafeAreaView>
                 </Form>
               )
             }}
           </Formik>
         </View>
-        <SafeAreaView style={FOOTER_ACTIONS}>
-          <View style={BUTTON_WRAPPER}>
-            <Button
-              style={BUTTON_CANCEL}
-              textStyle={BUTTON_CANCEL_TEXT}
-              tx="sendAssetsScreen.btnCancel"
-              onPress={handleCancel}
-            />
-            <Button
-              style={BUTTON_SAVE}
-              textStyle={BUTTON_SAVE_TEXT}
-              tx="sendAssetsScreen.btnSend"
-              onPress={handleSave}
-            />
-          </View>
-        </SafeAreaView>
       </Screen>
       <Modal
         style={MODAL_SUCCESS}

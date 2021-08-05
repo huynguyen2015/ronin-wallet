@@ -10,8 +10,6 @@ const BottomTabs = createBottomTabNavigator();
 
 import { PrimaryParamList } from "./"
 import { createStackNavigator, TransitionPresets } from "@react-navigation/stack"
-import { DemoScreen } from "../screens"
-import { DetailScreen } from "../screens/detail/detail-screen"
 import { SendAssetsScreen } from "../screens/sendAssets/send-assets-screen"
 import { HomeScreen } from "../screens/home/home-screen"
 import { TabBar } from "../components/layout/TabBar"
@@ -23,9 +21,7 @@ const TabsScreen = () => (
   <BottomTabs.Navigator
     tabBar={(props) => <TabBar {...props} />}>
     <BottomTabs.Screen name="home" component={HomeScreen} />
-    <BottomTabs.Screen name="comments" component={SendAssetsScreen} />
-    <BottomTabs.Screen name="clipboard-list" component={DetailScreen} />
-    <BottomTabs.Screen name="user" component={DemoScreen} />
+    <BottomTabs.Screen name="sendAssets" component={SendAssetsScreen} />
   </BottomTabs.Navigator>
 );
 
@@ -46,8 +42,6 @@ export function MainNavigator() {
       />
       <Stack.Screen name='home' component={HomeScreen} />
       <Stack.Screen name='sendAssets' component={SendAssetsScreen} />
-      <Stack.Screen name='detail' component={DetailScreen} />
-      <Stack.Screen name='demo' component={DemoScreen} />
     </Stack.Navigator>
   )
 }

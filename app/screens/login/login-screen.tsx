@@ -4,7 +4,7 @@ import { useNavigation } from "@react-navigation/native"
 import { observer } from "mobx-react-lite"
 import { Button, Text, PasswordField, Screen, Wallpaper } from "../../components"
 import { color, spacing } from "../../theme"
-import authService from '../../services/api/authService'
+import { useStores } from "../../models"
 const logoRonin = require("./logo-ronin.png")
 
 const FULL: ViewStyle = { flex: 1 }
@@ -61,7 +61,8 @@ const LOGIN_FORM: ViewStyle = {
   marginBottom: 24
 }
 
-export const LoginScreen = observer(function LoginScreen() {
+export const LoginScreen = observer(() => {
+  const {accountStore} = useStores()
   const navigation = useNavigation()
   const nextScreen = (stack, screen) => navigation.navigate(stack, {screen})
   const [loginData, setLoginData] = useState({
@@ -80,8 +81,8 @@ export const LoginScreen = observer(function LoginScreen() {
         return
       }
 
-      const data = await authService.login(loginData)
-      if (data) {
+      await accountStore.login(loginData)
+      if (accountStore.myProfile) {
         nextScreen('mainStack', 'home')
       }
     },
@@ -112,6 +113,7 @@ export const LoginScreen = observer(function LoginScreen() {
             textStyle={DEMO_TEXT}
             tx="loginScreen.btnLogin"
             onPress={handleLogin}
+            loading={accountStore.isLoading}
           />
           <Text style={HINT} tx={`loginScreen.btnLoginHint`} />
         </View>

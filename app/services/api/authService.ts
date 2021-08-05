@@ -18,6 +18,10 @@ class AuthService {
       await saveString(appStorageKey.ACCESS_TOKEN, data.accessToken)
       await save(appStorageKey.PROFILE_INFO, data.userInfo)
       await saveKeychain(body.email, body.password)
+      /// NOTE: hardcode balance from service
+      data.userInfo.amount = 1000
+      data.userInfo.accountNumber = '(7300 3777 3888 3334)'
+      data.userInfo.accountNumberHiding = '(7300...3334)'
       return data
     } catch {
       // Handle error

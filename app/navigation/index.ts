@@ -18,21 +18,15 @@ export * from "./navigation-utilities"
 export type PrimaryParamList = {
   welcome: undefined
   tabScreen: undefined
-  demo: undefined
   login: undefined
-  register: undefined
   home: undefined
   sendAssets: undefined
-  detail: undefined
 }
 
 export const Screens = {
   welcome: 'welcome',
   tabScreen: 'tabScreen',
-  demo: 'demo',
   login: 'login',
-  register: 'register',
   home: 'home',
   sendAssets: 'sendAssets',
-  detail: 'detail',
 }

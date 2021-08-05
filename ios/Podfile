@@ -4,7 +4,7 @@ require_relative '../node_modules/react-native-unimodules/cocoapods.rb'
 
 platform :ios, '10.0'
 
-target 'PizzaApp' do
+target 'WalletApp' do
   use_unimodules!
   config = use_native_modules!
 
@@ -14,7 +14,7 @@ target 'PizzaApp' do
 
   pod 'react-native-webview', :path => '../node_modules/react-native-webview'
 
-  target 'PizzaAppTests' do
+  target 'WalletAppTests' do
     inherit! :complete
     # Pods for testing
   end
@@ -29,10 +29,10 @@ target 'PizzaApp' do
   #end
 end
 
-target 'PizzaApp-tvOS' do
-  # Pods for PizzaApp-tvOS
+target 'WalletApp-tvOS' do
+  # Pods for WalletApp-tvOS
 
-  target 'PizzaApp-tvOSTests' do
+  target 'WalletApp-tvOSTests' do
     inherit! :search_paths
     # Pods for testing
   end

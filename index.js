@@ -16,5 +16,5 @@ if(__DEV__) {
   reactotron.setup()
 }
 
-AppRegistry.registerComponent("PizzaApp", () => App)
+AppRegistry.registerComponent("WalletApp", () => App)
 export default App

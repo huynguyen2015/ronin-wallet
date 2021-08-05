@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { Image, ImageStyle, TextStyle, TouchableOpacity, View, ViewStyle } from "react-native"
 import { useNavigation } from "@react-navigation/native"
 import { observer } from "mobx-react-lite"
@@ -7,6 +7,7 @@ import { color, spacing } from "../../theme"
 import { Screens } from "../../navigation"
 import {AssetItem} from '../../components/itemApps/AssetItem'
 import {exchangeToVND} from '../../utils/helper'
+import { useStores } from "../../models"
 
 const logoRoninWhite = require("../../../assets/logo-ronin-white.png")
 const IC_PERSON = require("../../../assets/icons/ic-person-fill.png")
@@ -177,15 +178,16 @@ const ASSET_ITEMS: ViewStyle = {
 
 export const HomeScreen = observer(function HomeScreen() {
   const navigation = useNavigation()
-  const userInfo = {accountNumber: '(7300 3777 3888 3334)',
-    balance: 1000,
-    exchangeRate: 23046,
-    country: 'en',
-    sign: 'USD'
-  }
-  const assetItems = [
-    {balance: 50, country: 'eu', sign: 'EUR', exchangeRate: 23},
-    {balance: 10000, country: 'ja', sign: 'YEN', exchangeRate: 23}]
+  const {accountStore} = useStores()
+  const {myProfile, mainAsset, assets} = accountStore
+
+  useEffect(() => {
+    accountStore.getAssets({})
+  }, [])
+
+  useEffect(() => {
+    console.log(myProfile, mainAsset)
+  }, [accountStore])
 
   const handleMenuItemClick = () => {
     navigation.navigate(Screens.sendAssets)
@@ -198,7 +200,7 @@ export const HomeScreen = observer(function HomeScreen() {
         <View style={HEADER}>
           <View style={HEADER_WALLET}>
             <Image source={IC_DOT}/>
-            <Text style={HEADER_WALLET_TEXT} tx={'homeScreen.roninWallet'}></Text>
+            <Text style={HEADER_WALLET_TEXT} tx={"homeScreen.roninWallet"}/>
           </View>
           <View style={HEADER_PROFILE}>
             <Image source={IC_PERSON}/>
@@ -207,8 +209,8 @@ export const HomeScreen = observer(function HomeScreen() {
         <View style={WALLET_WRAPPER}>
           <View style={MY_WALLET_WRAPPER}>
             <View style={MY_ACCOUNT_WRAPPER}>
-              <Text style={MY_WALLET} tx={'homeScreen.myWallet'}></Text>
-              <Text style={ACCOUNT_NUMBER} text={userInfo.accountNumber}></Text>
+              <Text style={MY_WALLET} tx={'homeScreen.myWallet'}/>
+              <Text style={ACCOUNT_NUMBER} text={myProfile.accountNumber}/>
             </View>
             <TouchableOpacity>
               <Image source={IC_COPY}/>
@@ -216,8 +218,8 @@ export const HomeScreen = observer(function HomeScreen() {
           </View>
           <View style={WALLET_AMOUNT_WRAPPER}>
             <View style={WALLET_AMOUNT}>
-              <Text style={AMOUNT} text={`${userInfo.balance} ${userInfo.sign}`}/>
-              <Text style={EXCHANGE_AMOUNT} text={exchangeToVND(userInfo.balance, userInfo.exchangeRate)}/>
+              <Text style={AMOUNT} text={`${mainAsset.amount} ${mainAsset.sign}`}/>
+              <Text style={EXCHANGE_AMOUNT} text={exchangeToVND(mainAsset.amount, mainAsset.exchangeRate)}/>
             </View>
             <View style={RONIN_ICON_WRAPPER}>
               <View style={RONIN_ICON}>
@@ -239,7 +241,7 @@ export const HomeScreen = observer(function HomeScreen() {
         </View>
         <Text style={ASSET} preset="header" tx="homeScreen.assets"/>
         <View style={ASSET_ITEMS}>
-          {assetItems.map((item, index) => {
+          {(assets || []).map((item, index) => {
             return <AssetItem item={item} key={index}/>
           })}
         </View>

@@ -56,8 +56,8 @@ export function AssetItem(props: AssetItemProps) {
       <View style={ASSET_ITEM}>
         <Image source={currencyIcons[item.country]} style={CURRENCY_ICON} />
         <View style={ASSET_INFO_WRAPPER}>
-          <Text style={ASSET_AMOUNT} text={`${item.balance} ${item.sign}`} />
-          <Text style={ASSET_EXCHANGE_AMOUNT} text={`${exchangeToVND(item.balance, item.exchangeRate)}`} />
+          <Text style={ASSET_AMOUNT} text={`${item.amount} ${item.sign}`} />
+          <Text style={ASSET_EXCHANGE_AMOUNT} text={`${exchangeToVND(item.amount, item.exchangeRate)}`} />
         </View>
       </View>
     </View>

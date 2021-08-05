@@ -133,7 +133,7 @@ class ModalSelect extends Component<any, any> {
             </View>
             <View style={MODAL_BODY}>
               {(assetItems || []).map((item, index) => {
-                return <TouchableOpacity onPress={() => this.handleSelectAsset(item)}>
+                return <TouchableOpacity onPress={() => this.handleSelectAsset(item)} key={index}>
                   <AssetItem item={item} key={index} style={{marginBottom: 0,
                     backgroundColor: index%2 === 0 ? color.palette.white : color.palette.offWhite}}/>
                 </TouchableOpacity>

@@ -1,9 +1,14 @@
 import * as React from "react"
-import { TouchableOpacity } from "react-native"
-import { Text } from "../text/text"
+import { Image, TouchableOpacity, ViewStyle } from "react-native"
+import { Text } from ".."
 import { viewPresets, textPresets } from "./button.presets"
 import { ButtonProps } from "./button.props"
 import { mergeAll, flatten } from "ramda"
+const LOADING = require("../../../assets/spinner.gif")
+
+const BUTTON_WRAPPER: ViewStyle = {
+  flexDirection: "row"
+}
 
 /**
  * For your text displaying needs.
@@ -19,10 +24,11 @@ export function Button(props: ButtonProps) {
     style: styleOverride,
     textStyle: textStyleOverride,
     children,
+    loading,
     ...rest
   } = props
 
-  const viewStyle = mergeAll(flatten([viewPresets[preset] || viewPresets.primary, styleOverride]))
+  const viewStyle = mergeAll(flatten([viewPresets[preset] || viewPresets.primary, BUTTON_WRAPPER, styleOverride]))
   const textStyle = mergeAll(
     flatten([textPresets[preset] || textPresets.primary, textStyleOverride]),
   )
@@ -31,6 +37,7 @@ export function Button(props: ButtonProps) {
 
   return (
     <TouchableOpacity style={viewStyle} {...rest}>
+      {loading && <Image source={LOADING} style={{width: 30, height: 30}} resizeMode={"cover"}/>}
       {content}
     </TouchableOpacity>
   )

@@ -2,9 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:PizzaApp.xcodeproj">
+      location = "group:/Users/macintosh/Documents/WORK/Ignite/WalletApp/ios/WalletApp.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:WalletApp.xcodeproj">
    </FileRef>
 </Workspace>
