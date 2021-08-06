@@ -8,6 +8,7 @@ import { Screens } from "../../navigation"
 import {AssetItem} from '../../components/itemApps/AssetItem'
 import {exchangeToVND} from '../../utils/helper'
 import { useStores } from "../../models"
+import { values } from 'mobx'
 
 const logoRoninWhite = require("../../../assets/logo-ronin-white.png")
 const IC_PERSON = require("../../../assets/icons/ic-person-fill.png")
@@ -179,15 +180,11 @@ const ASSET_ITEMS: ViewStyle = {
 export const HomeScreen = observer(function HomeScreen() {
   const navigation = useNavigation()
   const {accountStore} = useStores()
-  const {myProfile, mainAsset, assets} = accountStore
+  const {myProfile, mainAsset, allAssets} = accountStore
 
   useEffect(() => {
     accountStore.getAssets({})
   }, [])
-
-  useEffect(() => {
-    console.log(myProfile, mainAsset)
-  }, [accountStore])
 
   const handleMenuItemClick = () => {
     navigation.navigate(Screens.sendAssets)
@@ -241,7 +238,8 @@ export const HomeScreen = observer(function HomeScreen() {
         </View>
         <Text style={ASSET} preset="header" tx="homeScreen.assets"/>
         <View style={ASSET_ITEMS}>
-          {(assets || []).map((item, index) => {
+          {values(allAssets || []).filter(item => item.country !== mainAsset.country)
+          .map((item, index) => {
             return <AssetItem item={item} key={index}/>
           })}
         </View>

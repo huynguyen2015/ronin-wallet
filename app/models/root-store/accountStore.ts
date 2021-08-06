@@ -1,8 +1,11 @@
-import { flow, getEnv, types } from "mobx-state-tree"
+import { flow, getEnv, types, applySnapshot } from "mobx-state-tree"
 import authService from "../../services/api/authService"
 import assetService from "../../services/api/assetService"
+import { values } from "mobx"
+
 
 const ProfileModel = types.model({
+  id: types.optional(types.number, 0),
   username: types.optional(types.string, ""),
   email: types.optional(types.string, ""),
   password: types.optional(types.string, ""),
@@ -43,7 +46,9 @@ export const AccountStore = types.model("AccountStore", {
     try {
       markLoading(true)
       let res = yield authService.login(data)
-      self.myProfile.map(res.userInfo || {})
+      if (res) {
+        self.myProfile.map(res.userInfo || {})
+      }
       markLoading(false)
     } catch (err) {
       console.log("Failed to load: ", err)
@@ -76,8 +81,8 @@ export const AccountStore = types.model("AccountStore", {
         }
       })
       const [mainAsset] = allAssets;
-      self.mainAsset = mainAsset;
-      self.allAssets = allAssets
+      applySnapshot(self.mainAsset, mainAsset)
+      applySnapshot(self.allAssets, [...(values(allAssets || [])).map(item => ({...item}))])
       markLoading(false)
     } catch (err) {
       console.log("Failed to load: ", err)

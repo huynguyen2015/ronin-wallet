@@ -15,6 +15,9 @@ class AuthService {
     try {
       const url = `members/login`
       const data = await api.post(url, body)
+      if (!data) {
+        return null
+      }
       await saveString(appStorageKey.ACCESS_TOKEN, data.accessToken)
       await save(appStorageKey.PROFILE_INFO, data.userInfo)
       await saveKeychain(body.email, body.password)

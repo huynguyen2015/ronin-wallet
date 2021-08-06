@@ -100,7 +100,6 @@ export const WelcomeScreen = observer(function WelcomeScreen() {
   loadString(appStorageKey.ACCESS_TOKEN).then(accessToken => {
     if (accessToken) {
       /// TODO init app
-      console.log(accessToken)
       nextScreen(Screens.home)
     } else {
       nextScreen(Screens.login, 'authStack')
@@ -163,7 +162,6 @@ export const WelcomeScreen = observer(function WelcomeScreen() {
               style={CONTINUE}
               textStyle={CONTINUE_TEXT}
               tx="welcomeScreen.detail"
-              onPress={() => nextScreen(Screens.detail)}
             />
           </View>
         </View>

@@ -11,7 +11,6 @@ import {BottomMenuItem} from './BottomMenuIcon';
 import {color} from '../../theme';
 
 export const TabBar = ({state, descriptors, navigation}) => {
-  console.log(state)
   const [translateValue] = useState(new Animated.Value(0));
   const totalWidth = Dimensions.get('window').width;
   const tabWidth = totalWidth / state.routes.length;

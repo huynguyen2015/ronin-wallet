@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
+import { Image, ImageStyle, TextStyle, View, ViewStyle, Alert } from "react-native"
 import { useNavigation } from "@react-navigation/native"
 import { observer } from "mobx-react-lite"
 import { Button, Text, PasswordField, Screen, Wallpaper } from "../../components"
@@ -70,20 +70,42 @@ export const LoginScreen = observer(() => {
     password: 'aaaaaa'
   } as any);
 
+  const validateBeforeSend = () => {
+    if (!loginData || !loginData.email) {
+      // throw error
+      return false
+    }
+    if (!loginData.password && loginData.password.length < 6) {
+      Alert.alert(
+        "Error",
+        "Invalid password, please try again.",
+        [{ text: "Cancel", style: "cancel" }, { text: "OK"}]
+      );
+      return false
+    }
+
+    return true
+  }
+
+  const informError = () => {
+    Alert.alert(
+      "Error",
+      "Invalid username or password, please try again.",
+      [{ text: "Cancel", style: "cancel" }, { text: "OK"}]
+    );
+  }
+
   const handleLogin = React.useMemo(
     () => async () => {
-      if (!loginData || !loginData.email) {
-        // throw error
-        return
-      }
-      if (!loginData.password) {
-        // throw error
+      if (!validateBeforeSend()) {
         return
       }
 
       await accountStore.login(loginData)
-      if (accountStore.myProfile) {
+      if (accountStore.myProfile && accountStore.myProfile.id) {
         nextScreen('mainStack', 'home')
+      } else {
+        informError()
       }
     },
     [],
@@ -104,7 +126,7 @@ export const LoginScreen = observer(() => {
         <View style={LOGIN_FORM}>
           <PasswordField
             onChangeText={(value) => changeLoginData('password', value)}
-            value={loginData.password}
+            defaultValue={loginData.password}
             labelTx="loginScreen.password"/>
         </View>
         <View style={BUTTON_WRAPPER}>

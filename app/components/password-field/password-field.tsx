@@ -13,6 +13,7 @@ import { color, spacing, typography } from "../../theme"
 import { translate } from "../../i18n"
 import { Text } from ".."
 import { mergeAll, flatten } from "ramda"
+import debounce from "lodash/debounce"
 const IC_EYE = require("../../../assets/icons/ic-eye.png")
 
 // the base styling for the container
@@ -108,6 +109,7 @@ export function PasswordField(props: PasswordFieldProps) {
     style: styleOverride,
     inputStyle: inputStyleOverride,
     forwardedRef,
+    onChangeText,
     ...rest
   } = props
   let containerStyle: ViewStyle = { ...CONTAINER, ...PRESETS[preset] }
@@ -118,6 +120,8 @@ export function PasswordField(props: PasswordFieldProps) {
   inputStyle = enhance(inputStyle, inputStyleOverride)
   const actualPlaceholder = placeholderTx ? translate(placeholderTx) : placeholder
 
+  const handleTextChange = debounce(onChangeText, 200)
+
   return (
     <View style={containerStyle}>
       <Text preset="fieldLabel" tx={labelTx} text={label} style={LABEL_STYLE} />
@@ -126,6 +130,7 @@ export function PasswordField(props: PasswordFieldProps) {
           placeholder={actualPlaceholder}
           placeholderTextColor={color.palette.lighterGrey}
           underlineColorAndroid={color.transparent}
+          onChangeText={handleTextChange}
           {...rest}
           style={inputStyle}
           ref={forwardedRef}

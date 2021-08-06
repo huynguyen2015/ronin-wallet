@@ -204,7 +204,6 @@ export const SendAssetsScreen = observer(function SendAssetsScreen() {
   }
 
   const maxBadge = <View style={MAX_BADGE}><Text tx="sendAssetsScreen.max" style={BADGE_TEXT}/></View>
-
   return (
     <View testID="SendAssetsScreen" style={FULL}>
       <Wallpaper/>
