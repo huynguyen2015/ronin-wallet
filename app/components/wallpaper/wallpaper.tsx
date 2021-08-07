@@ -20,6 +20,5 @@ export function Wallpaper(props: WallpaperProps) {
 
   // figure out which image to use
   const source = backgroundImage || defaultImage
-
-  return <Image source={source} style={style} />
+  return <Image source={source} style={style}/>
 }

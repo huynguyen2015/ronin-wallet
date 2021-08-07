@@ -5,8 +5,11 @@
     "back": "Back"
   },
   "errors": {
+    "error": "Error",
     "invalidEmail": "Invalid email address.",
-    "requiredField": "This is required field"
+    "requiredField": "This is required field",
+    "invalidUserOrPassword": "Invalid username or password, please try again.",
+    "invalidPassword": "Invalid password, please try again."
   },
   "welcomeScreen": {
     "poweredBy": "POWERED BY IGNITE",

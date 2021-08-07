@@ -5,6 +5,7 @@ import { observer } from "mobx-react-lite"
 import { Button, Text, PasswordField, Screen, Wallpaper } from "../../components"
 import { color, spacing } from "../../theme"
 import { useStores } from "../../models"
+import { translate } from "../../i18n/"
 const logoRonin = require("./logo-ronin.png")
 
 const FULL: ViewStyle = { flex: 1 }
@@ -67,7 +68,7 @@ export const LoginScreen = observer(() => {
   const nextScreen = (stack, screen) => navigation.navigate(stack, {screen})
   const [loginData, setLoginData] = useState({
     email: 'mary_qroauyp_test@tfbnw.net',
-    password: 'aaaaaa'
+    password: ''
   } as any);
 
   const validateBeforeSend = () => {
@@ -77,9 +78,9 @@ export const LoginScreen = observer(() => {
     }
     if (!loginData.password && loginData.password.length < 6) {
       Alert.alert(
-        "Error",
-        "Invalid password, please try again.",
-        [{ text: "Cancel", style: "cancel" }, { text: "OK"}]
+        translate("errors.error"),
+        translate("errors.invalidPassword"),
+        [{ text: translate("btnCancel"), style: "cancel" }, { text: translate("btnOk")}]
       );
       return false
     }
@@ -89,9 +90,9 @@ export const LoginScreen = observer(() => {
 
   const informError = () => {
     Alert.alert(
-      "Error",
-      "Invalid username or password, please try again.",
-      [{ text: "Cancel", style: "cancel" }, { text: "OK"}]
+      translate("errors.error"),
+      translate("errors.invalidUserOrPassword"),
+      [{ text: translate("btnCancel"), style: "cancel" }, { text: translate("btnOk")}]
     );
   }
 

@@ -7,7 +7,7 @@ import { color, spacing } from "../../theme"
 const BASE_VIEW: ViewStyle = {
   paddingVertical: spacing[2],
   paddingHorizontal: spacing[2],
-  borderRadius: 4,
+  borderRadius: 8,
   justifyContent: "center",
   alignItems: "center",
 }
@@ -25,7 +25,7 @@ export const viewPresets = {
   /**
    * A smaller piece of secondard information.
    */
-  primary: { ...BASE_VIEW, backgroundColor: color.palette.orange } as ViewStyle,
+  primary: { ...BASE_VIEW, backgroundColor: color.palette.blue } as ViewStyle,
 
   /**
    * A button without extras.
